@@ -4,7 +4,7 @@ name: i2util-workflow
   
 on:  
   workflow_dispatch:
-    inputs: 
+    inputs:  
       OS: 
         description: 'OS to build'
         required: true
@@ -13,7 +13,7 @@ on:
         required: true
   workflow_run:
     workflows: "Create Artifacts and pass runid"
-    branches: 'github-docker'
+    branches: 'github-workflow'
     types:
       - completed
 
@@ -54,7 +54,7 @@ jobs:
               owner: 'cs1867',
               repo: 'owamp',
               workflow_id: 'owamp-docker.yml',
-              ref: 'github-docker',
+              ref: 'github-workflow',
                inputs: {
                 OS:  '${{ github.event.inputs.OS }}',
                 MINORPACKAGEID:  '${{ github.event.inputs.MINORPACKAGEID }}',
