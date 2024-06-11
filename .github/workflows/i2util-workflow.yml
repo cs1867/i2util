@@ -53,7 +53,7 @@ jobs:
               await github.rest.actions.createWorkflowDispatch({
               owner: 'cs1867',
               repo: 'owamp',
-              workflow_id: 'owamp-docker.yml',
+              workflow_id: 'owamp-workflow.yml',
               ref: 'github-workflow',
                inputs: {
                 OS:  '${{ github.event.inputs.OS }}',
