@@ -8,8 +8,8 @@ on:
       OS: 
         description: 'OS to build'
         required: true
-      MINORPACKAGEID:
-        description: 'Minor Package run id'
+      BUILD_VARS_JSON:
+        description: 'Build var json file'
         required: true
   workflow_run:
     workflows: "Create Artifacts and pass runid"
@@ -29,36 +29,36 @@ jobs:
           with:
            ref: 5.2.0
           
-        - name: Create a temporary artifact downloads folder
-          run: mkdir aritfacts
+      #  - name: Create a temporary artifact downloads folder
+      #    run: mkdir aritfacts
 
-        - name: run docker oneshot builder
-          run: |
-           curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . '${{ github.event.inputs.OS }}'  
+      #  - name: run docker oneshot builder
+      #    run: |
+      #     curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . '${{ github.event.inputs.OS }}'  
 
-        - uses: actions/upload-artifact@v3
-          with:
-          #Name the artifact uniquely
-            name: ${{ github.event.repository.name }}-${{ github.event.inputs.OS }}
-            #Where the finished product lives after the build
-            path: unibuild-repo
-            #Don't keep these for long.  This is just a test.
-            retention-days: 5
-         
-        - name: Pass workflow to owamp repo
-          uses: actions/github-script@v6
-          with:
-            github-token: ${{ secrets.GIT_ACTIONS }}
-            script: |
-              await github.rest.actions.createWorkflowDispatch({
-              owner: 'cs1867',
-              repo: 'owamp',
-              workflow_id: 'owamp-workflow.yml',
-              ref: 'github-workflow',
-               inputs: {
-                OS:  '${{ github.event.inputs.OS }}',
-                MINORPACKAGEID:  '${{ github.event.inputs.MINORPACKAGEID }}',
-                I2UTILID: '${{ github.run_id }}'
-              }
-              })
+      #  - uses: actions/upload-artifact@v3
+      #    with:
+      #    #Name the artifact uniquely
+      #      name: ${{ github.event.repository.name }}-${{ github.event.inputs.OS }}
+      #      #Where the finished product lives after the build
+      #      path: unibuild-repo
+      #      #Don't keep these for long.  This is just a test.
+      #      retention-days: 5
+      #   
+      #  - name: Pass workflow to owamp repo
+      #    uses: actions/github-script@v6
+      #    with:
+      #      github-token: ${{ secrets.GIT_ACTIONS }}
+      #      script: |
+      #        await github.rest.actions.createWorkflowDispatch({
+      #        owner: 'cs1867',
+      #        repo: 'owamp',
+      #        workflow_id: 'owamp-workflow.yml',
+      #        ref: 'github-workflow',
+      #         inputs: {
+      #          OS:  '${{ github.event.inputs.OS }}',
+      #          MINORPACKAGEID:  '${{ github.event.inputs.MINORPACKAGEID }}',
+      #          I2UTILID: '${{ github.run_id }}'
+      #        }
+      #        })
     
