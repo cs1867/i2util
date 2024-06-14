@@ -50,10 +50,10 @@ jobs:
             echo "$modified_json" | jq . 
 
             
-        - name: Extract repo name
+        - name: Extract next repo name
           id: extract_repo_name
           run: |
-            NEXTREPO=$(echo '${{ github.event.inputs.BUILD_VARS_JSON }}' |  -r '.repos[0].name' )
+            NEXTREPO=$(echo '${{ github.event.inputs.BUILD_VARS_JSON }}' | jq -r '.repos[0].name' )
             echo "NEXTREPO=${NEXTREPO}" >> $GITHUB_ENV  
             
         - name: Display NEXTREPO value
