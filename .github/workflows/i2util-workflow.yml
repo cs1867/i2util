@@ -28,11 +28,6 @@ jobs:
           uses: actions/checkout@v4
           with:
            ref: 5.2.0
-           
-        - name: Use BUILD_VARS_JSON
-          run: |
-            echo "BUILD_VARS_JSON value is: ${{ env.BUILD_VARS_JSON }}"
-            echo "BUILD_VARS_JSON=${BUILD_VARS_JSON}"
 
         - name: Verify BUILD_VARS_JSON
           run: |
@@ -40,7 +35,12 @@ jobs:
             echo " **** next ****"
             echo "${{ github.event.inputs.BUILD_VARS_JSON }}"
             echo " **** next next ****"
-            echo "${{ fromJson(github.event.inputs.BUILD_VARS_JSON) }}"    
+            echo "${{ fromJson(github.event.inputs.BUILD_VARS_JSON) }}"  
+
+        - name: Verify BUILD_VARS_JSON
+          run: |
+            jq -r '.repos[0].name'  "${{ github.event.inputs.BUILD_VARS_JSON }}"
+ 
 
        # - name: update build_vars.json
        #   run: |
