@@ -41,6 +41,13 @@ jobs:
           run: |
                 # Parse and pretty-print the JSON using jq
                 echo '${{ github.event.inputs.BUILD_VARS_JSON }}' | jq .
+
+        - name: Modify BUILD_VARS_JSON
+          id: modify_json
+          run: |
+            modified_json=$(echo '${{ github.event.inputs.BUILD_VARS_JSON }}' | jq '.buildids.new_key = "new_value"')
+            echo "Modified JSON:"
+            echo "$modified_json" | jq .        
  
 
        # - name: update build_vars.json
