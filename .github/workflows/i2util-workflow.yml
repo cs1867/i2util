@@ -28,7 +28,19 @@ jobs:
           uses: actions/checkout@v4
           with:
            ref: 5.2.0
-          
+           
+        - name: Use BUILD_VARS_JSON
+          run: |
+            echo "BUILD_VARS_JSON value is: $BUILD_VARS_JSON"
+
+        - name: update build_vars.json
+          run: |
+            echo "jq print the file  ***********************"
+            jq . "${{ env.BUILD_VARS_JSON }}"
+
+
+
+            
       #  - name: Create a temporary artifact downloads folder
       #    run: mkdir aritfacts
 
