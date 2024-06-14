@@ -32,6 +32,7 @@ jobs:
         - name: Use BUILD_VARS_JSON
           run: |
             echo "BUILD_VARS_JSON value is: ${{ env.BUILD_VARS_JSON }}"
+            echo "BUILD_VARS_JSON=${BUILD_VARS_JSON}"
 
        # - name: update build_vars.json
        #   run: |
