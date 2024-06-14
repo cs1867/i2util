@@ -47,8 +47,17 @@ jobs:
           run: |
             modified_json=$(echo '${{ github.event.inputs.BUILD_VARS_JSON }}' | jq 'del(.repos[0])')
             echo "Modified JSON:"
-            echo "$modified_json" | jq .        
- 
+            echo "$modified_json" | jq . 
+
+            
+        - name: Extract repo name
+          id: extract_repo_name
+          run: |
+            NEXTREPO=$(echo '${{ github.event.inputs.BUILD_VARS_JSON }}' | jq 'del(.repos[0])')
+            echo "NEXTREPO=${NEXTREPO}" >> $GITHUB_ENV  
+            
+        - name: Display NEXTREPO value
+          run: echo "The value of NEXTREPO is $NEXTREPO"  
 
        # - name: update build_vars.json
        #   run: |
