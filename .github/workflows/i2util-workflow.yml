@@ -53,7 +53,7 @@ jobs:
         - name: Extract repo name
           id: extract_repo_name
           run: |
-            NEXTREPO=$(echo '${{ github.event.inputs.BUILD_VARS_JSON }}' | jq 'del(.repos[0])')
+            NEXTREPO=$(echo '${{ github.event.inputs.BUILD_VARS_JSON }}' |  -r '.repos[0].name' )
             echo "NEXTREPO=${NEXTREPO}" >> $GITHUB_ENV  
             
         - name: Display NEXTREPO value
