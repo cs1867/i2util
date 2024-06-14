@@ -34,6 +34,12 @@ jobs:
             echo "BUILD_VARS_JSON value is: ${{ env.BUILD_VARS_JSON }}"
             echo "BUILD_VARS_JSON=${BUILD_VARS_JSON}"
 
+        - name: Verify BUILD_VARS_JSON
+          run: |
+            echo "Printing BUILD_VARS_JSON for verification"
+            echo "${{ github.event.inputs.BUILD_VARS_JSON }}"
+            echo "${{ fromJson(github.event.inputs.BUILD_VARS_JSON) }}"    
+
        # - name: update build_vars.json
        #   run: |
        #     echo "jq print the file  ***********************"
