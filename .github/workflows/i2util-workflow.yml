@@ -40,7 +40,7 @@ jobs:
         - name: Verify BUILD_VARS_JSON
           run: |
                 # Parse and pretty-print the JSON using jq
-                echo "${{ github.event.inputs.BUILD_VARS_JSON }}" | jq .
+                echo '${{ github.event.inputs.BUILD_VARS_JSON }}' | jq .
  
 
        # - name: update build_vars.json
