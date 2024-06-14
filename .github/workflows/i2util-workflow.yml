@@ -31,12 +31,12 @@ jobs:
            
         - name: Use BUILD_VARS_JSON
           run: |
-            echo "BUILD_VARS_JSON value is: $BUILD_VARS_JSON"
+            echo "BUILD_VARS_JSON value is: ${{ env.BUILD_VARS_JSON }}"
 
-        - name: update build_vars.json
-          run: |
-            echo "jq print the file  ***********************"
-            jq . "${{ env.BUILD_VARS_JSON }}"
+       # - name: update build_vars.json
+       #   run: |
+       #     echo "jq print the file  ***********************"
+       #     jq . "${{ env.BUILD_VARS_JSON }}"
 
 
 
