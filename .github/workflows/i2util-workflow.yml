@@ -58,6 +58,8 @@ jobs:
             echo "Modified JSON:"
             echo "$modified_json" | jq .
             echo "BUILD_VARS_JSON=$modified_json" >> $GITHUB_ENV
+          env:
+            BUILD_VARS_JSON: ${{ steps.modify_json.outputs.modified_json }}
             
         - name: Look up the next repo name to build
           id: extract_repo_name
