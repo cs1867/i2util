@@ -50,11 +50,13 @@ jobs:
             echo "$modified_json" | jq .
             echo "BUILD_VARS_JSON=$modified_json" 
             echo " **** next next ****"
-            echo "BUILD_VARS_JSON=${BUILD_VARS_JSON}" >> $GITHUB_ENV
+            echo "BUILD_VARS_JSON=${BUILD_VARS_JSON}" >> $GITHUB_ENV|
+            echo "BUILD_VARS_JSON value is: $BUILD_VARS_JSON" 
             
         - name: Look up the next repo name to build
           id: extract_repo_name
           run: |
+            echo "BUILD_VARS_JSON value is: $BUILD_VARS_JSON"
             NEXTREPO=$(echo '${{ github.event.inputs.BUILD_VARS_JSON }}' | jq -r '.repos[0].name' )
             echo "NEXTREPO=${NEXTREPO}" >> $GITHUB_ENV  
             
