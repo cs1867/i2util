@@ -48,10 +48,9 @@ jobs:
             modified_json=$(echo '${{ github.event.inputs.BUILD_VARS_JSON }}' | jq 'del(.repos[0])')
             echo "Modified JSON:"
             echo "$modified_json" | jq .
-            echo "BUILD_VARS_JSON=$modified_json" 
+            echo "BUILD_VARS=$modified_json" 
             echo " **** next next ****"
-            echo "BUILD_VARS_JSON=${BUILD_VARS_JSON}" >> $GITHUB_ENV|
-            echo "BUILD_VARS_JSON value is: $BUILD_VARS_JSON" 
+            echo "BUILD_VARS=$modified_json" >> $GITHUB_ENV          
             
         - name: Look up the next repo name to build
           id: extract_repo_name
