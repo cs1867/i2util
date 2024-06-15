@@ -42,23 +42,15 @@ jobs:
                 # Parse and pretty-print the JSON using jq
                 echo '${{ github.event.inputs.BUILD_VARS_JSON }}' | jq .
 
-       #- name: Delete current repo from build
-       #   id: modify_json
-       #   run: |
-       #     modified_json=$(echo '${{ github.event.inputs.BUILD_VARS_JSON }}' | jq 'del(.repos[0])')
-       #     echo "Modified JSON:"
-       #     echo "$modified_json" | jq .
-       #     echo "BUILD_VARS_JSON=$modified_json" >> $GITHUB_ENV
-
         - name: Delete current repo from build
           id: modify_json
           run: |
-            echo '${{ github.event.inputs.BUILD_VARS_JSON }}' | jq 'del(.repos[0])' > modified_json_temp.json
-            modified_json=$(<modified_json_temp.json)
+            modified_json=$(echo '${{ github.event.inputs.BUILD_VARS_JSON }}' | jq 'del(.repos[0])')
             echo "Modified JSON:"
             echo "$modified_json" | jq .
-            echo " @@@@@@@@@@new build vars @@@@@@@@"
             echo "BUILD_VARS_JSON=$modified_json" 
+            echo " **** next next ****"
+            echo "${{ fromJson(github.event.inputs.BUILD_VARS_JSON) }}"
             
         - name: Look up the next repo name to build
           id: extract_repo_name
