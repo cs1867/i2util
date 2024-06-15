@@ -50,7 +50,7 @@ jobs:
             echo "$modified_json" | jq .
             echo "BUILD_VARS_JSON=$modified_json" 
             echo " **** next next ****"
-            echo "${{ fromJson(github.event.inputs.BUILD_VARS_JSON) }}"
+            echo "${{ fromJson(github.event.inputs.BUILD_VARS_JSON) }}" >> $GITHUB_ENV
             
         - name: Look up the next repo name to build
           id: extract_repo_name
