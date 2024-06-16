@@ -1,5 +1,3 @@
-#Workflow for GitHub Actions
-
 name: i2util-workflow
   
 on:  
@@ -18,53 +16,48 @@ on:
       - completed
 
 jobs:
-       
   build-i2util:
-
-     runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
      
-     steps:
-        - name: Check out Repo
-          uses: actions/checkout@v4
-          with:
-           ref: 5.2.0
+    steps:
+      - name: Check out Repo
+        uses: actions/checkout@v4
+        with:
+          ref: 5.2.0
 
-        - name: Verify BUILD_VARS_JSON
-          run: |
-            echo "Printing BUILD_VARS_JSON for verification"
-            echo " **** next ****"
-            echo "${{ github.event.inputs.BUILD_VARS_JSON }}"
-            echo " **** next next ****"
-            echo "${{ fromJson(github.event.inputs.BUILD_VARS_JSON) }}"  
-            echo "BUILD_VARS=$BUILD_VARS"
+      - name: Verify BUILD_VARS_JSON
+        run: |
+          echo "Printing BUILD_VARS_JSON for verification"
+          echo "**** next ****"
+          echo "${{ github.event.inputs.BUILD_VARS_JSON }}"
+          echo "**** next next ****"
+          echo "${{ fromJson(github.event.inputs.BUILD_VARS_JSON) }}"  
+          echo "BUILD_VARS=$BUILD_VARS"
 
-        - name: Verify BUILD_VARS_JSON
-          run: |
-                # Parse and pretty-print the JSON using jq
-                echo '${{ github.event.inputs.BUILD_VARS_JSON }}' | jq .
+      - name: Pretty-print BUILD_VARS_JSON
+        run: |
+          echo '${{ github.event.inputs.BUILD_VARS_JSON }}' | jq .
 
-        - name: Delete current repo from build
-          id: modify_json
-          run: |
-            modified_json=$(echo '${{ github.event.inputs.BUILD_VARS_JSON }}' | jq 'del(.repos[0])')
-            echo "Modified JSON:"
-            echo "$modified_json" | jq .
-            echo "BUILD_VARS_JSON=$modified_json" 
-            echo " **** next next ****"
-            BUILD_VARS_JSON=$(echo "$modified_json" | jq -r '.')
-            echo "@@@ @@@ @@@ @@@ "
-            echo "BUILD_VARS_JSON=$BUILD_VARS_JSON"
-            echo "BUILD_VARS_JSON=$BUILD_VARS_JSON" >> $GITHUB_ENV         
-            
-        - name: Look up the next repo name to build
-          id: extract_repo_name
-          run: |
-            echo "BUILD_VARS_JSON value is: $BUILD_VARS_JSON"
-            NEXTREPO=$(echo '${{ github.event.inputs.BUILD_VARS_JSON }}' | jq -r '.repos[0].name' )
-            echo "NEXTREPO=${NEXTREPO}" >> $GITHUB_ENV  
-            
-        - name: Display NEXTREPO value
-          run: echo "The value of NEXTREPO is $NEXTREPO"  
+      - name: Delete current repo from build
+        id: modify_json
+        run: |
+          # Remove the first repo from the repos array
+          modified_json=$(echo '${{ github.event.inputs.BUILD_VARS_JSON }}' | jq 'del(.repos[0])')
+          echo "Modified JSON:"
+          echo "$modified_json" | jq .
+          
+          # Convert the modified JSON back to a single-line string and export it as an environment variable
+          BUILD_VARS_JSON=$(echo "$modified_json" | jq -c '.')
+          echo "BUILD_VARS_JSON=$BUILD_VARS_JSON" >> $GITHUB_ENV
+          echo "**** next next ****"
+          echo "BUILD_VARS_JSON=$BUILD_VARS_JSON"
+
+      # Example subsequent step that uses BUILD_VARS_JSON
+      - name: Use modified BUILD_VARS_JSON
+        run: |
+          echo "Using the modified BUILD_VARS_JSON environment variable:"
+          echo "$BUILD_VARS_JSON"
+
 
        # - name: update build_vars.json
        #   run: |
