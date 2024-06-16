@@ -36,6 +36,7 @@ jobs:
             echo "${{ github.event.inputs.BUILD_VARS_JSON }}"
             echo " **** next next ****"
             echo "${{ fromJson(github.event.inputs.BUILD_VARS_JSON) }}"  
+            echo "BUILD_VARS=$BUILD_VARS"
 
         - name: Verify BUILD_VARS_JSON
           run: |
