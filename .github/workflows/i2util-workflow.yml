@@ -52,6 +52,7 @@ jobs:
             echo "BUILD_VARS_JSON=$modified_json" 
             echo " **** next next ****"
             BUILD_VARS_JSON=$(echo "$modified_json" | jq -r '.')
+            echo "@@@ @@@ @@@ @@@ "
             echo "BUILD_VARS_JSON=$BUILD_VARS_JSON"
           #echo "BUILD_VARS_JSON=$modified_json" >> $GITHUB_ENV          
             
