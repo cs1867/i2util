@@ -54,7 +54,7 @@ jobs:
             BUILD_VARS_JSON=$(echo "$modified_json" | jq -r '.')
             echo "@@@ @@@ @@@ @@@ "
             echo "BUILD_VARS_JSON=$BUILD_VARS_JSON"
-          #echo "BUILD_VARS_JSON=$modified_json" >> $GITHUB_ENV          
+            echo "$BUILD_VARS_JSON" >> $GITHUB_ENV          
             
         - name: Look up the next repo name to build
           id: extract_repo_name
