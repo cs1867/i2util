@@ -25,15 +25,6 @@ jobs:
         with:
           ref: 5.2.0
 
-      - name: Verify BUILD_VARS_JSON
-        run: |
-          echo "Printing BUILD_VARS_JSON for verification"
-          echo "**** next ****"
-          echo "${{ github.event.inputs.BUILD_VARS_JSON }}"
-          echo "**** next next ****"
-          echo "${{ fromJson(github.event.inputs.BUILD_VARS_JSON) }}"  
-          echo "BUILD_VARS=$BUILD_VARS"
-
       - name: Pretty-print BUILD_VARS_JSON
         run: |
           echo '${{ github.event.inputs.BUILD_VARS_JSON }}' | jq .
