@@ -50,7 +50,7 @@ jobs:
             echo "$modified_json" | jq .
             echo "BUILD_VARS=$modified_json" 
             echo " **** next next ****"
-            echo "BUILD_VARS=$modified_json" >> $GITHUB_ENV          
+          #echo "BUILD_VARS=$modified_json" >> $GITHUB_ENV          
             
         - name: Look up the next repo name to build
           id: extract_repo_name
