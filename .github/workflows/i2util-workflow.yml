@@ -101,7 +101,7 @@ jobs:
             ref: 'github-workflow',
               inputs: {
               OS:  '${{ github.event.inputs.OS }}',
-              BUILD_VARS_JSON: "$BUILD_VARS_JSON"
+              BUILD_VARS_JSON: '${{ env.BUILD_VARS_JSON}}'
             }
             })
     
