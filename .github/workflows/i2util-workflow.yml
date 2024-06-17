@@ -16,7 +16,7 @@ on:
       - completed
 
 jobs:
-  build-i2util:
+  build-:
     runs-on: ubuntu-latest
      
     steps:
@@ -64,7 +64,7 @@ jobs:
         run: |
           GITHUB_RUN_ID=${{ github.run_id }}
     
-          modified_json=$(echo "$BUILD_VARS_JSON" | jq --arg run_id "$GITHUB_RUN_ID" '.buildids.i2util = $run_id')
+          modified_json=$(echo "$BUILD_VARS_JSON" | jq --arg run_id "$GITHUB_RUN_ID" '.buildids.${{ github.event.repository.name }} = $run_id')
     
           echo "Modified JSON with GitHub run ID:"
           echo "$modified_json" | jq .
@@ -87,15 +87,15 @@ jobs:
            #Don't keep these for long.  This is just a test.
            retention-days: 5
          
-      - name: Pass workflow to owamp repo
+      - name: Pass workflow  
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GIT_ACTIONS }}
           script: |
             await github.rest.actions.createWorkflowDispatch({
             owner: 'cs1867',
-            repo: 'owamp',
-            workflow_id: 'owamp-workflow.yml',
+            repo: '${{ env.NEXTREPO}}',
+            workflow_id: ''${{ env.NEXTREPO}}'-workflow.yml',
             ref: 'github-workflow',
               inputs: {
               OS:  '${{ github.event.inputs.OS }}',
