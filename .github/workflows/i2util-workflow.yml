@@ -16,7 +16,7 @@ on:
       - completed
 
 jobs:
-  build-:
+  build-i2util:
     runs-on: ubuntu-latest
      
     steps:
