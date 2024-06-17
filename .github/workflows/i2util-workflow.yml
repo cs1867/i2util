@@ -81,11 +81,11 @@ jobs:
           curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . '${{ github.event.inputs.OS }}'  
 
       - uses: actions/upload-artifact@v3
-         with:
-            name: ${{ github.event.repository.name }}-${{ github.event.inputs.OS }}
-            path: unibuild-repo
-            #Don't keep these for long.  This is just a test.
-            retention-days: 5
+        with:
+           name: ${{ github.event.repository.name }}-${{ github.event.inputs.OS }}
+           path: unibuild-repo
+           #Don't keep these for long.  This is just a test.
+           retention-days: 5
          
       - name: Pass workflow to owamp repo
         uses: actions/github-script@v6
