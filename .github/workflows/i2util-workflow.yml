@@ -95,7 +95,7 @@ jobs:
             await github.rest.actions.createWorkflowDispatch({
             owner: 'cs1867',
             repo: '${{ env.NEXTREPO}}',
-            workflow_id: ''${{ env.NEXTREPO}}'-workflow.yml',
+            workflow_id: '${{ env.NEXTREPO}}-workflow.yml',
             ref: 'github-workflow',
               inputs: {
               OS:  '${{ github.event.inputs.OS }}',
