@@ -93,7 +93,7 @@ jobs:
            #Don't keep these for long.  This is just a test.
            retention-days: 5
 
-      - name: Capture start date and time
+      - name: Capture end date and time
         id: end_time
         run: echo "end_time=$(date -u)" >> $GITHUB_ENV
        
