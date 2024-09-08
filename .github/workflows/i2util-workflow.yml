@@ -1,6 +1,6 @@
 name: i2util-workflow
   
-on:  
+on:
   workflow_dispatch:
     inputs:  
       BUILD_BRANCH: 
