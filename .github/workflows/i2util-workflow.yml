@@ -39,6 +39,9 @@ jobs:
           echo "BUILD_OS=$BUILD_OS" >> $GITHUB_ENV 
           echo "BUILD_BRANCH=$BUILD_BRANCH" >> $GITHUB_ENV
           echo "BUILD_TYPE=$BUILD_TYPE" >> $GITHUB_ENV
+          echo "BUILD_OS=$BUILD_OS"
+          echo "BUILD_BRANCHN=$BUILD_BRANCH"
+          echo "BUILD_TYPE=$BUILD_TYPE"
           
       - name: Check out Repo
         uses: actions/checkout@v4
@@ -71,7 +74,7 @@ jobs:
 
       - name: run docker oneshot builder
         run: |
-          curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . '${{ env.OS }}'  
+          curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . '${{ env.BUILD_OS }}'  
           
       - uses: actions/upload-artifact@v3
         with:
