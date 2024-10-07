@@ -27,12 +27,10 @@ jobs:
           modified_json=$(echo '${{ github.event.inputs.BUILD_VARS_JSON }}' | jq '.buildstats += { "${{ github.event.repository.name }}-start": "${{ env.start_time }}" }' )
           BUILD_VARS_JSON=$(echo "$modified_json" | jq -c '.')
           echo "BUILD_VARS_JSON=$BUILD_VARS_JSON" >> $GITHUB_ENV
-          echo "BUILD_VARS_JSON=$BUILD_VARS_JSON"
 
       - name: Get build vars from input file
         id: extract_build_vars
         run: |
-          echo "BUILD_VARS_JSON value is: $BUILD_VARS_JSON"
           BUILD_OS=$(echo  "$BUILD_VARS_JSON" | jq -r '.buildstats.OS' )
           BUILD_BRANCH=$(echo  "$BUILD_VARS_JSON" | jq -r '.buildstats.BUILD_BRANCH' )
           BUILD_TYPE=$(echo  "$BUILD_VARS_JSON" | jq -r '.buildstats.BUILD_TYPE' )
