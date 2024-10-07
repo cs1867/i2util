@@ -3,12 +3,6 @@ name: i2util-workflow
 on:
   workflow_dispatch:
     inputs:  
-   #   BUILD_BRANCH: 
-   #     description: 'Branch to build'
-   #     required: true
-   #   OS: 
-   #     description: 'OS to build'
-   #     required: true
       BUILD_VARS_JSON:
         description: 'Build var json file'
         required: true
@@ -40,7 +34,7 @@ jobs:
         run: |
           echo "BUILD_VARS_JSON value is: $BUILD_VARS_JSON"
           BUILD_OS=$(echo  "$BUILD_VARS_JSON" | jq -r '.buildstats.OS' )
-          BUILD_BRANCH=$(echo  "$BUILD_VARS_JSON" | jq -r '.buildstats.BRANCH' )
+          BUILD_BRANCH=$(echo  "$BUILD_VARS_JSON" | jq -r '.buildstats.BUILD_BRANCH' )
           BUILD_TYPE=$(echo  "$BUILD_VARS_JSON" | jq -r '.buildstats.BUILD_TYPE' )
           echo "BUILD_OS=$BUILD_OS" >> $GITHUB_ENV 
           echo "BUILD_BRANCH=$BUILD_BRANCH" >> $GITHUB_ENV
@@ -49,7 +43,7 @@ jobs:
       - name: Check out Repo
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.inputs.BUILD_BRANCH }}
+          ref: ${{ env.BUILD_BRANCH }}
 
       - name: Delete current repo from build
         id: modify_json
@@ -77,11 +71,11 @@ jobs:
 
       - name: run docker oneshot builder
         run: |
-          curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . '${{ github.event.inputs.OS }}'  
+          curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . '${{ env.OS }}'  
           
       - uses: actions/upload-artifact@v3
         with:
-           name: ${{ github.event.repository.name }}-${{ github.event.inputs.OS }}
+           name: ${{ github.event.repository.name }}-${{ env.OS }}
            path: unibuild-repo
            retention-days: 5
 
@@ -107,9 +101,7 @@ jobs:
             workflow_id: '${{ env.NEXTREPO}}-workflow.yml',
             ref: 'github-workflow',
               inputs: {
-              OS:  '${{ github.event.inputs.OS }}',
-              BUILD_VARS_JSON: '${{ env.BUILD_VARS_JSON}}',
-              BUILD_BRANCH: '${{ github.event.inputs.BUILD_BRANCH }}'
+              BUILD_VARS_JSON: '${{ env.BUILD_VARS_JSON}}'
             }
             })
     
