@@ -78,7 +78,7 @@ jobs:
           
       - uses: actions/upload-artifact@v3
         with:
-           name: ${{ github.event.repository.name }}-${{ env.OS }}
+           name: ${{ github.event.repository.name }}-${{ env.BUILD_OS }}
            path: unibuild-repo
            retention-days: 5
 
