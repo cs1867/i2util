@@ -3,12 +3,12 @@ name: i2util-workflow
 on:
   workflow_dispatch:
     inputs:  
-      BUILD_BRANCH: 
-        description: 'Branch to build'
-        required: true
-      OS: 
-        description: 'OS to build'
-        required: true
+   #   BUILD_BRANCH: 
+   #     description: 'Branch to build'
+   #     required: true
+   #   OS: 
+   #     description: 'OS to build'
+   #     required: true
       BUILD_VARS_JSON:
         description: 'Build var json file'
         required: true
@@ -39,8 +39,12 @@ jobs:
         id: extract_build_vars
         run: |
           echo "BUILD_VARS_JSON value is: $BUILD_VARS_JSON"
-          BUILD_TYPE=$(echo  "$BUILD_VARS_JSON" | jq -r '.buildstats[0].BUILD_TYPE' )
-          echo "BUILD_TYPE=$BUILD_TYPE" >> $GITHUB_ENV  
+          BUILD_OS=$(echo  "$BUILD_VARS_JSON" | jq -r '.buildstats.OS' )
+          BUILD_BRANCH=$(echo  "$BUILD_VARS_JSON" | jq -r '.buildstats.BRANCH' )
+          BUILD_TYPE=$(echo  "$BUILD_VARS_JSON" | jq -r '.buildstats.BUILD_TYPE' )
+          echo "BUILD_OS=$BUILD_OS" >> $GITHUB_ENV 
+          echo "BUILD_BRANCH=$BUILD_BRANCH" >> $GITHUB_ENV
+          echo "BUILD_TYPE=$BUILD_TYPE" >> $GITHUB_ENV
           
       - name: Check out Repo
         uses: actions/checkout@v4
