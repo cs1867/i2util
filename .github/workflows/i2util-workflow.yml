@@ -22,14 +22,14 @@ jobs:
         id: start_time
         run: echo "start_time=$(date -u)" >> $GITHUB_ENV
        
-      - name: Add start time to build_vars.json
+      - name: Add start time to build-vars.json
         run: |
           modified_json=$(echo '${{ github.event.inputs.BUILD_VARS_JSON }}' | jq '.buildstats += { "${{ github.event.repository.name }}-start": "${{ env.start_time }}" }' )
           BUILD_VARS_JSON=$(echo "$modified_json" | jq -c '.')
           echo "BUILD_VARS_JSON=$BUILD_VARS_JSON" >> $GITHUB_ENV
 
       - name: Get build vars from input file
-        id: extract_build_vars
+        id: extract-build-vars
         run: |
           BUILD_OS=$(echo  "$BUILD_VARS_JSON" | jq -r '.buildstats.OS' )
           BUILD_BRANCH=$(echo  "$BUILD_VARS_JSON" | jq -r '.buildstats.BUILD_BRANCH' )
@@ -87,7 +87,7 @@ jobs:
         id: end_time
         run: echo "end_time=$(date -u)" >> $GITHUB_ENV
        
-      - name: Add end time to build_vars.json
+      - name: Add end time to build-vars.json
         run: |
           modified_json=$(echo "$BUILD_VARS_JSON" | jq '.buildstats += { "${{ github.event.repository.name }}-end": "${{ env.end_time }}" }' )
           BUILD_VARS_JSON=$(echo "$modified_json" | jq -c '.')
