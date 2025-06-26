@@ -24,7 +24,7 @@ jobs:
         with:
           BUILD_VARS_JSON: ${{ github.event.inputs.BUILD_VARS_JSON }}
         secrets:
-          GIT_ACTIONS: ${{ secrets.GIT_ACTIONS }}
+          GIT_ACTIONS: ${{ secrets.GIT_ACTIONS }} 
 
       - name: Create a temporary artifact downloads folder
         run: mkdir artifacts
