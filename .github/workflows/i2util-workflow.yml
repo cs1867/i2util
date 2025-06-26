@@ -21,6 +21,8 @@ jobs:
       GIT_ACTIONS: ${{ secrets.GIT_ACTIONS }}
 
   build_i2util:
+
+  
     runs-on: ubuntu-latest
     needs: pre_build_setup
     env:
@@ -30,6 +32,17 @@ jobs:
       BUILD_TYPE: ${{ needs.pre_build_setup.outputs.BUILD_TYPE }}
     steps:
 
+
+      - name: Print build vars (debug)
+        run: |
+         echo "==== Incoming BUILD_VARS_JSON ===="
+         echo "$BUILD_VARS_JSON" | jq .
+         echo
+         echo "==== Incoming ENV Variables ===="
+         echo "BUILD_OS=$BUILD_OS"
+         echo "BUILD_BRANCH=$BUILD_BRANCH"
+         echo "BUILD_TYPE=$BUILD_TYPE"
+         
       - name: Create artifact downloads folder
         run: mkdir artifacts
 
