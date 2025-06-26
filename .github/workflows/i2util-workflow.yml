@@ -14,7 +14,7 @@ on:
 
 jobs:
   pre_build_setup:
-    uses: cs1867/projects/.github/workflows/pre-build-setup.yml@master
+    uses: cs1867/project/.github/workflows/pre-build-setup.yml@master
     with:
       BUILD_VARS_JSON: ${{ github.event.inputs.BUILD_VARS_JSON }}
     secrets:
