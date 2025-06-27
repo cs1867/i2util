@@ -57,15 +57,15 @@ jobs:
           echo "BUILD_BRANCH=$BUILD_BRANCH"
           echo "BUILD_TYPE=$BUILD_TYPE"
 
-      - name: Create artifact downloads folder
-        run: mkdir artifacts
+     # - name: Create artifact downloads folder
+     #   run: mkdir artifacts
 
-      - name: Run docker oneshot builder
-        run: |
-          curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . '${{ env.BUILD_OS }}'  
+    #  - name: Run docker oneshot builder
+    #    run: |
+    #      curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . '${{ env.BUILD_OS }}'  
 
-      - uses: actions/upload-artifact@v4
-        with:
-          name: ${{ github.event.repository.name }}-${{ env.BUILD_OS }}
-          path: unibuild-repo
-          retention-days: 5
+     # - uses: actions/upload-artifact@v4
+     #   with:
+     #     name: ${{ github.event.repository.name }}-${{ env.BUILD_OS }}
+     #     path: unibuild-repo
+     #     retention-days: 5
