@@ -26,7 +26,7 @@ jobs:
     needs: pre_build_setup
     env:
       BUILD_VARS_JSON: ${{ needs.pre_build_setup.outputs.BUILD_VARS_JSON }}
-      BUILD_OS: ${{ needs.pre_build_setup.outputs.BUILD_OS }}
+      BUILD_OS: ${{ needs.pre_build_setup.outputs.OS }}
       BUILD_BRANCH: ${{ needs.pre_build_setup.outputs.BUILD_BRANCH }}
       BUILD_TYPE: ${{ needs.pre_build_setup.outputs.BUILD_TYPE }}
     steps:
@@ -34,13 +34,13 @@ jobs:
         run: |
           echo "=== Job Outputs from pre_build_setup ==="
           echo "BUILD_VARS_JSON=${{ needs.pre_build_setup.outputs.BUILD_VARS_JSON }}"
-          echo "BUILD_OS=${{ needs.pre_build_setup.outputs.BUILD_OS }}"
+          echo "OS=${{ needs.pre_build_setup.outputs.OS }}"
           echo "BUILD_BRANCH=${{ needs.pre_build_setup.outputs.BUILD_BRANCH }}"
           echo "BUILD_TYPE=${{ needs.pre_build_setup.outputs.BUILD_TYPE }}"
           echo
           echo "=== Env Vars in this Job ==="
           echo "BUILD_VARS_JSON=$BUILD_VARS_JSON"
-          echo "BUILD_OS=$BUILD_OS"
+          echo "OS=$OS"
           echo "BUILD_BRANCH=$BUILD_BRANCH"
           echo "BUILD_TYPE=$BUILD_TYPE"
 
