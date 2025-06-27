@@ -40,7 +40,7 @@ jobs:
           echo "BUILD_VARS_JSON=$BUILD_VARS_JSON" >> $GITHUB_ENV
 
       - run: |
-          echo "OS from reusable workflow: ${{ needs.call-reusable.outputs.result }}"
+          echo "OS from reusable workflow: ${{ needs.call-reusable.outputs.op }}"
 
       - name: Get build vars from input file
         id: extract-build-vars
