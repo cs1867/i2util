@@ -14,16 +14,16 @@ on:
 
 jobs:
 
-  #call-reusable:
-  #  uses: cs1867/project/.github/workflows/reuseable.yml@master
-  #  with:
-  #    input_number: 1
-  #    BUILD_VARS_JSON: ${{ inputs.BUILD_VARS_JSON }}
+  call-reusable:
+    uses: cs1867/project/.github/workflows/reuseable.yml@master
+    with:
+      input_number: 1
+      BUILD_VARS_JSON: ${{ inputs.BUILD_VARS_JSON }}
 
       
   build-i2util:
     runs-on: ubuntu-latest
-  #  needs: call-reusable
+    needs: call-reusable
     steps:
      
       - run: |
