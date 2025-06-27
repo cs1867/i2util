@@ -13,7 +13,12 @@ on:
       - completed
 
 jobs:
- 
+  pre_build_setup:
+    uses: cs1867/project/.github/workflows/pre-build-setup.yml@master
+    with:
+      BUILD_VARS_JSON: ${{ github.event.inputs.BUILD_VARS_JSON }}
+    secrets:
+      GIT_ACTIONS: ${{ secrets.GIT_ACTIONS }}
 
   build_i2util:
     runs-on: ubuntu-latest
@@ -23,13 +28,9 @@ jobs:
       BUILD_OS: ${{ needs.pre_build_setup.outputs.BUILD_OS }}
       BUILD_BRANCH: ${{ needs.pre_build_setup.outputs.BUILD_BRANCH }}
       BUILD_TYPE: ${{ needs.pre_build_setup.outputs.BUILD_TYPE }}
+      
     steps:
-      - name: pre_build_setup
-        uses: cs1867/project/.github/workflows/pre-build-setup.yml@master 
-        with:
-          BUILD_VARS_JSON: ${{ github.event.inputs.BUILD_VARS_JSON }}
     
-         
       - name: Confirm raw job outputs from pre_build_setup
         run: |
          echo "=== Raw job outputs from pre_build_setup ==="
