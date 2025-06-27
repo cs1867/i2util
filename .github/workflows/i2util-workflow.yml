@@ -42,18 +42,18 @@ jobs:
       - run: |
           echo "OS from reusable workflow: ${{ needs.call-reusable.outputs.op }}"
 
-      - name: Get build vars from input file
-        id: extract-build-vars
-        run: |
-          BUILD_OS=$(echo  "$BUILD_VARS_JSON" | jq -r '.buildstats.OS' )
-          BUILD_BRANCH=$(echo  "$BUILD_VARS_JSON" | jq -r '.buildstats.BUILD_BRANCH' )
-          BUILD_TYPE=$(echo  "$BUILD_VARS_JSON" | jq -r '.buildstats.BUILD_TYPE' )
-          echo "BUILD_OS=$BUILD_OS" >> $GITHUB_ENV 
-          echo "BUILD_BRANCH=$BUILD_BRANCH" >> $GITHUB_ENV
-          echo "BUILD_TYPE=$BUILD_TYPE" >> $GITHUB_ENV
-          echo "BUILD_OS=$BUILD_OS"
-          echo "BUILD_BRANCHN=$BUILD_BRANCH"
-          echo "BUILD_TYPE=$BUILD_TYPE"
+    #  - name: Get build vars from input file
+    #    id: extract-build-vars
+    #    run: |
+    #      BUILD_OS=$(echo  "$BUILD_VARS_JSON" | jq -r '.buildstats.OS' )
+    #      BUILD_BRANCH=$(echo  "$BUILD_VARS_JSON" | jq -r '.buildstats.BUILD_BRANCH' )
+    #      BUILD_TYPE=$(echo  "$BUILD_VARS_JSON" | jq -r '.buildstats.BUILD_TYPE' )
+    #      echo "BUILD_OS=$BUILD_OS" >> $GITHUB_ENV 
+    #      echo "BUILD_BRANCH=$BUILD_BRANCH" >> $GITHUB_ENV
+    #      echo "BUILD_TYPE=$BUILD_TYPE" >> $GITHUB_ENV
+    #      echo "BUILD_OS=$BUILD_OS"
+    #      echo "BUILD_BRANCHN=$BUILD_BRANCH"
+    #      echo "BUILD_TYPE=$BUILD_TYPE"
           
     #  - name: Check out Repo
     #    uses: actions/checkout@v4
