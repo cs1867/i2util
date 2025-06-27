@@ -13,11 +13,21 @@ on:
       - completed
 
 jobs:
+
+  call-reusable:
+    uses: cs1867/project/.github/workflows/reuseable.yml@master
+    with:
+      input_number: 1
+
+      
   build-i2util:
     runs-on: ubuntu-latest
-     
+    needs: call-reusable
     steps:
-
+     
+      - run: |
+         echo "Result from reusable workflow: ${{ needs.call-reusable.outputs.result }}"
+     
       - name: Capture start date and time
         id: start_time
         run: echo "start_time=$(date -u)" >> $GITHUB_ENV
@@ -41,70 +51,70 @@ jobs:
           echo "BUILD_BRANCHN=$BUILD_BRANCH"
           echo "BUILD_TYPE=$BUILD_TYPE"
           
-      - name: Check out Repo
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ env.BUILD_BRANCH }}
+    #  - name: Check out Repo
+    #    uses: actions/checkout@v4
+    #    with:
+    #      ref: ${{ env.BUILD_BRANCH }}
 
-      - name: Delete current repo from build
-        id: modify_json
-        run: |
-          modified_json=$(echo "$BUILD_VARS_JSON" | jq 'del(.repos[0])')
-          BUILD_VARS_JSON=$(echo "$modified_json" | jq -c '.')
-          echo "BUILD_VARS_JSON=$BUILD_VARS_JSON" >> $GITHUB_ENV
-          echo "**** next next ****"
-          echo "BUILD_VARS_JSON=$BUILD_VARS_JSON" 
+    #  - name: Delete current repo from build
+    #    id: modify_json
+    #    run: |
+    #      modified_json=$(echo "$BUILD_VARS_JSON" | jq 'del(.repos[0])')
+    #      BUILD_VARS_JSON=$(echo "$modified_json" | jq -c '.')
+    #      echo "BUILD_VARS_JSON=$BUILD_VARS_JSON" >> $GITHUB_ENV
+    #      echo "**** next next ****"
+    #      echo "BUILD_VARS_JSON=$BUILD_VARS_JSON" 
           
-      - name: Look up the next repo name to build
-        id: extract_repo_name
-        run: |
-          echo "BUILD_VARS_JSON value is: $BUILD_VARS_JSON"
-          NEXTREPO=$(echo  "$BUILD_VARS_JSON" | jq -r '.repos[0].name' )
-          echo "NEXTREPO=$NEXTREPO" >> $GITHUB_ENV  
+    #  - name: Look up the next repo name to build
+    #    id: extract_repo_name
+    #    run: |
+    #      echo "BUILD_VARS_JSON value is: $BUILD_VARS_JSON"
+    #      NEXTREPO=$(echo  "$BUILD_VARS_JSON" | jq -r '.repos[0].name' )
+    #      echo "NEXTREPO=$NEXTREPO" >> $GITHUB_ENV  
 
-      - name: Add GitHub run ID to buildids
-        id: add_run_id
-        run: |
-          GITHUB_RUN_ID=${{ github.run_id }}
-          modified_json=$(echo "$BUILD_VARS_JSON" | jq --arg run_id "$GITHUB_RUN_ID" '.buildids."${{ github.event.repository.name }}" = $run_id')
-          BUILD_VARS_JSON=$(echo "$modified_json" | jq -c '.')
-          echo "BUILD_VARS_JSON=$BUILD_VARS_JSON" >> $GITHUB_ENV
+    #  - name: Add GitHub run ID to buildids
+    #    id: add_run_id
+    #    run: |
+    #      GITHUB_RUN_ID=${{ github.run_id }}
+    #      modified_json=$(echo "$BUILD_VARS_JSON" | jq --arg run_id "$GITHUB_RUN_ID" '.buildids."${{ github.event.repository.name }}" = $run_id')
+    #      BUILD_VARS_JSON=$(echo "$modified_json" | jq -c '.')
+    #      echo "BUILD_VARS_JSON=$BUILD_VARS_JSON" >> $GITHUB_ENV
             
-      - name: Create a temporary artifact downloads folder
-        run: mkdir aritfacts
+    #  - name: Create a temporary artifact downloads folder
+    #    run: mkdir aritfacts
 
-      - name: run docker oneshot builder
-        run: |
-          curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . '${{ env.BUILD_OS }}'  
+     # - name: run docker oneshot builder
+     #   run: |
+     #     curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . '${{ env.BUILD_OS }}'  
           
-      - uses: actions/upload-artifact@v4
-        with:
-           name: ${{ github.event.repository.name }}-${{ env.BUILD_OS }}
-           path: unibuild-repo
-           retention-days: 5
+     # - uses: actions/upload-artifact@v4
+     #   with:
+     #      name: ${{ github.event.repository.name }}-${{ env.BUILD_OS }}
+     #      path: unibuild-repo
+     #      retention-days: 5
 
-      - name: Capture end date and time
-        id: end_time
-        run: echo "end_time=$(date -u)" >> $GITHUB_ENV
+     # - name: Capture end date and time
+     #   id: end_time
+     #   run: echo "end_time=$(date -u)" >> $GITHUB_ENV
        
-      - name: Add end time to build-vars.json
-        run: |
-          modified_json=$(echo "$BUILD_VARS_JSON" | jq '.buildstats += { "${{ github.event.repository.name }}-end": "${{ env.end_time }}" }' )
-          BUILD_VARS_JSON=$(echo "$modified_json" | jq -c '.')
-          echo "BUILD_VARS_JSON=$BUILD_VARS_JSON" >> $GITHUB_ENV
+     # - name: Add end time to build-vars.json
+      #  run: |
+     #     modified_json=$(echo "$BUILD_VARS_JSON" | jq '.buildstats += { "${{ github.event.repository.name }}-end": "${{ env.end_time }}" }' )
+     #     BUILD_VARS_JSON=$(echo "$modified_json" | jq -c '.')
+     #     echo "BUILD_VARS_JSON=$BUILD_VARS_JSON" >> $GITHUB_ENV
          
-      - name: Pass workflow  
-        if: env.BUILD_TYPE == 'FULL'
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.GIT_ACTIONS }}
-          script: |
-            await github.rest.actions.createWorkflowDispatch({
-            owner: 'cs1867',
-            repo: '${{ env.NEXTREPO}}',
-            workflow_id: '${{ env.NEXTREPO}}-workflow.yml',
-            ref: 'github-workflow',
-              inputs: {
-              BUILD_VARS_JSON: '${{ env.BUILD_VARS_JSON}}'
-            }
-            })
+     # - name: Pass workflow  
+     #   if: env.BUILD_TYPE == 'FULL'
+     #   uses: actions/github-script@v6
+     #   with:
+     #     github-token: ${{ secrets.GIT_ACTIONS }}
+     #     script: |
+     #       await github.rest.actions.createWorkflowDispatch({
+     #       owner: 'cs1867',
+     #       repo: '${{ env.NEXTREPO}}',
+     #       workflow_id: '${{ env.NEXTREPO}}-workflow.yml',
+     #       ref: 'github-workflow',
+     #         inputs: {
+     #         BUILD_VARS_JSON: '${{ env.BUILD_VARS_JSON}}'
+     #       }
+     #       })
