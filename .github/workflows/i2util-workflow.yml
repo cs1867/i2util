@@ -11,7 +11,8 @@ on:
     branches: 'github-workflow'
     types:
       - completed
-
+ 
+ 
 jobs:
   pre_build_setup:
     uses: cs1867/project/.github/workflows/pre-build-setup.yml@master
@@ -28,34 +29,19 @@ jobs:
       BUILD_OS: ${{ needs.pre_build_setup.outputs.BUILD_OS }}
       BUILD_BRANCH: ${{ needs.pre_build_setup.outputs.BUILD_BRANCH }}
       BUILD_TYPE: ${{ needs.pre_build_setup.outputs.BUILD_TYPE }}
-      
     steps:
-    
-      - name: Confirm raw job outputs from pre_build_setup
-        run: |
-         echo "=== Raw job outputs from pre_build_setup ==="
-         echo "BUILD_VARS_JSON: ${{ needs.pre_build_setup.outputs.BUILD_VARS_JSON }}"
-         echo "BUILD_OS: ${{ needs.pre_build_setup.outputs.BUILD_OS }}"
-         echo "BUILD_BRANCH: ${{ needs.pre_build_setup.outputs.BUILD_BRANCH }}"
-         echo "BUILD_TYPE: ${{ needs.pre_build_setup.outputs.BUILD_TYPE }}"
-
-      - name: Confirm populated env vars in build_i2util
-        run: |
-         echo "=== Environment Variables in build_i2util ==="
-         echo "BUILD_OS=$BUILD_OS"
-         echo "BUILD_BRANCH=$BUILD_BRANCH"
-         echo "BUILD_TYPE=$BUILD_TYPE"
-         echo "$BUILD_VARS_JSON" | jq .
-         
       - name: Print build vars (debug)
         run: |
-          echo "==== Incoming BUILD_VARS_JSON ===="
-          echo "$BUILD_VARS_JSON" | jq .
+          echo "=== Job Outputs from pre_build_setup ==="
+          echo "BUILD_OS=${{ needs.pre_build_setup.outputs.BUILD_OS }}"
+          echo "BUILD_BRANCH=${{ needs.pre_build_setup.outputs.BUILD_BRANCH }}"
+          echo "BUILD_TYPE=${{ needs.pre_build_setup.outputs.BUILD_TYPE }}"
           echo
-          echo "==== Incoming ENV Variables ===="
+          echo "=== Env Vars in this Job ==="
           echo "BUILD_OS=$BUILD_OS"
           echo "BUILD_BRANCH=$BUILD_BRANCH"
           echo "BUILD_TYPE=$BUILD_TYPE"
+
 
      # - name: Create artifact downloads folder
      #   run: mkdir artifacts
