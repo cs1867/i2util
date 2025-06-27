@@ -13,31 +13,50 @@ on:
       - completed
 
 jobs:
-
+  set-vars:
+    runs-on: ubuntu-latest
+    outputs:
+      animal: ${{ steps.set.outputs.animal }}
+    steps:
+      - id: set
+        run: echo "animal=Dogs" >> $GITHUB_OUTPUT
+        
   call-reusable:
     uses: cs1867/project/.github/workflows/reuseable.yml@master
+    needs: set-vars
     with:
-      input_number: 1
-      BUILD_VARS_JSON: ${{ inputs.BUILD_VARS_JSON }}
+      input_string: ${{ needs.set-vars.outputs.animal }}
 
-      
-  build-i2util:
+  show-result:
     runs-on: ubuntu-latest
     needs: call-reusable
     steps:
-     
       - run: |
-         echo "Result from reusable workflow: ${{ needs.call-reusable.outputs.result }}"
-     
-      - name: Capture start date and time
-        id: start_time
-        run: echo "start_time=$(date -u)" >> $GITHUB_ENV
-       
-      - name: Add start time to build-vars.json
-        run: |
-          modified_json=$(echo '${{ github.event.inputs.BUILD_VARS_JSON }}' | jq '.buildstats += { "${{ github.event.repository.name }}-start": "${{ env.start_time }}" }' )
-          BUILD_VARS_JSON=$(echo "$modified_json" | jq -c '.')
-          echo "BUILD_VARS_JSON=$BUILD_VARS_JSON" >> $GITHUB_ENV
+         echo "Final Result: ${{ needs.call-reusable.outputs.result }}"
+  #call-reusable:
+  #  uses: cs1867/project/.github/workflows/reuseable.yml@master
+  #  with:
+  #    input_number: 1
+  #    BUILD_VARS_JSON: ${{ inputs.BUILD_VARS_JSON }}
+
+      
+ # build-i2util:
+ #   runs-on: ubuntu-latest
+ #   needs: call-reusable
+ #   steps:
+ #    
+ #     - run: |
+ #        echo "Result from reusable workflow: ${{ needs.call-reusable.outputs.result }}"
+ #    
+ #     - name: Capture start date and time
+ #       id: start_time
+ #       run: echo "start_time=$(date -u)" >> $GITHUB_ENV
+ #      
+ #     - name: Add start time to build-vars.json
+ #       run: |
+ #         modified_json=$(echo '${{ github.event.inputs.BUILD_VARS_JSON }}' | jq '.buildstats += { "${{ github.event.repository.name }}-start": "${{ env.start_time }}" }' )
+ #         BUILD_VARS_JSON=$(echo "$modified_json" | jq -c '.')
+ #         echo "BUILD_VARS_JSON=$BUILD_VARS_JSON" >> $GITHUB_ENV
 
    #   - run: |
    #       echo "OS from reusable workflow: ${{ needs.call-reusable.outputs.op }}"
