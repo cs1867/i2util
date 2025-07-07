@@ -21,7 +21,6 @@ jobs:
                  
   call-reusable:
     uses: cs1867/project/.github/workflows/pre-build-setup.yml@master
-    needs: set-vars
     with:
       BUILD_VARS_JSON: ${{ inputs.BUILD_VARS_JSON }}
 
