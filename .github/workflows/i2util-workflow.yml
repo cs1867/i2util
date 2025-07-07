@@ -16,16 +16,17 @@ jobs:
   set-vars:
     runs-on: ubuntu-latest
     outputs:
-      animal: ${{ steps.set.outputs.animal }}
+      animal: ${{ steps.set.outputs.OS }}
     steps:
       - id: set
-        run: echo "animal=Dogs" >> $GITHUB_OUTPUT
+        run: |
+          "BUILD_VARS_JSON=$BUILD_VARS_JSON" >> $GITHUB_OUTPUT
         
   call-reusable:
-    uses: cs1867/project/.github/workflows/reuseable.yml@master
+    uses: cs1867/project/.github/workflows/pre-build-setup.yml@master
     needs: set-vars
     with:
-      input_string: ${{ needs.set-vars.outputs.animal }}
+      input_string: ${{ needs.set-vars.outputs.OS }}
 
   show-result:
     runs-on: ubuntu-latest
