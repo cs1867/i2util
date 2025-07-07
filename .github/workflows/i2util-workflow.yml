@@ -25,11 +25,11 @@ jobs:
           cat "$GITHUB_OUTPUT"
            
         
-  call-reusable:
-    uses: cs1867/project/.github/workflows/pre-build-setup.yml@master
-    needs: set-vars
-    with:
-      input_string: ${{ needs.set-vars.outputs.OS }}
+#  call-reusable:
+#    uses: cs1867/project/.github/workflows/pre-build-setup.yml@master
+##    needs: set-vars
+#    with:
+#      input_string: ${{ needs.set-vars.outputs.OS }}
 
 #  show-result:
 #    runs-on: ubuntu-latest
