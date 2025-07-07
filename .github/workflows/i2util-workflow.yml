@@ -16,20 +16,14 @@ jobs:
   set-vars:
     runs-on: ubuntu-latest
     outputs:
-      animal: ${{ steps.set.outputs.OS }}
-    steps:
-      - id: set
-        run: |
-          compact_json=$(echo "$modified_json" | jq -c '.')
-          echo "BUILD_VARS_JSON=$compact_json" >> $GITHUB_OUTPUT
-          cat "$GITHUB_OUTPUT"
-           
-        
-#  call-reusable:
-#    uses: cs1867/project/.github/workflows/pre-build-setup.yml@master
-##    needs: set-vars
-#    with:
-#      input_string: ${{ needs.set-vars.outputs.OS }}
+      OS: ${{ steps.set.outputs.OS }}
+
+                 
+  call-reusable:
+    uses: cs1867/project/.github/workflows/pre-build-setup.yml@master
+    needs: set-vars
+    with:
+      BUILD_VARS_JSON: ${{ inputs.BUILD_VARS_JSON }}
 
 #  show-result:
 #    runs-on: ubuntu-latest
