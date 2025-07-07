@@ -15,6 +15,7 @@ jobs:
       BUILD_VARS_JSON: ${{ inputs.BUILD_VARS_JSON }}
       
   build-i2util:
+    needs: call-reusable 
     runs-on: ubuntu-latest
      
     steps:
