@@ -13,6 +13,8 @@ jobs:
     uses: cs1867/project/.github/workflows/reusable.yml@master
     with:
       BUILD_VARS_JSON: ${{ inputs.BUILD_VARS_JSON }}
+    secrets:
+      token: ${{ secrets.GIT_ACTIONS }}
       
   build-i2util:
     needs: call-reusable 
