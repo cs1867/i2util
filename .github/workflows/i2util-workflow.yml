@@ -25,7 +25,8 @@ jobs:
     uses: cs1867/project/.github/workflows/reuseable.yml@master
     needs: set-vars
     with:
-      input_string: 10
+      input_number: "10"  # or remove this if it's not really needed
+      BUILD_VARS_JSON: ${{ inputs.BUILD_VARS_JSON }}
 
   show-result:
     runs-on: ubuntu-latest
