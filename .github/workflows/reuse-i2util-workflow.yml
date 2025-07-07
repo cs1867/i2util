@@ -1,4 +1,4 @@
-name: i2util-workflow-presetup
+name: reuse-i2util-workflow
   
 on:
   workflow_dispatch:
