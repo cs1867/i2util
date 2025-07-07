@@ -6,13 +6,14 @@ on:
       BUILD_VARS_JSON:
         description: 'Build var json file'
         required: true
-  workflow_run:
-    workflows: "Create Artifacts and pass runid"
-    branches: 'github-workflow'
-    types:
-      - completed
-
+ 
 jobs:
+
+  call-reusable:
+    uses: cs1867/project/.github/workflows/reusable.yml@master
+    with:
+      BUILD_VARS_JSON: ${{ inputs.BUILD_VARS_JSON }}
+      
   build-i2util:
     runs-on: ubuntu-latest
      
