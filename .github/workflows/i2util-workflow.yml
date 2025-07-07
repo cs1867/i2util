@@ -25,7 +25,7 @@ jobs:
     uses: cs1867/project/.github/workflows/reuseable.yml@master
     needs: set-vars
     with:
-      input_string: ${{ needs.set-vars.outputs.animal }}
+      input_string: 10
 
   show-result:
     runs-on: ubuntu-latest
