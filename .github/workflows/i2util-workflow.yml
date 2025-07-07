@@ -10,7 +10,7 @@ on:
 jobs:
 
   call-reusable:
-    uses: cs1867/project/.github/workflows/reusable.yml@master
+    uses:  project/.github/workflows/reusable.yml@master
     with:
       BUILD_VARS_JSON: ${{ inputs.BUILD_VARS_JSON }}
     secrets:
