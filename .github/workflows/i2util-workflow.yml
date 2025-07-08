@@ -40,4 +40,5 @@ jobs:
         id: verfiy-json
         run: |
           echo "BUILD_VARS_JSON: ${{ needs.call-reusable.outputs.BUILD_VARS_JSON }}" 
+          echo "Build OS : ${{ needs.call-reusable.outputs.BUILD_OS }}"
     
