@@ -36,5 +36,5 @@ jobs:
       - name: echo json
         id: review-json
         run: |
-         echo "$BUILD_VARS_JSON"
+         echo  ${{ needs.call-reusable.outputs.BUILD_VARS_JSON }}"
      
