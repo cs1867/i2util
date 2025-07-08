@@ -33,4 +33,5 @@ jobs:
     steps:
       - run: |
          echo "Final Result: ${{ needs.call-reusable.outputs.result }}"
+         echo "Build OS : ${{ needs.call-reusable.outputs.BUILD_OS }}"
     
