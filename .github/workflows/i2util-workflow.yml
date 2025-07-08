@@ -32,7 +32,6 @@ jobs:
     needs: call-reusable
     steps:
       - run: |
-         echo "Final Result: ${{ needs.call-reusable.outputs.result }}"
          echo "Build OS : ${{ needs.call-reusable.outputs.BUILD_OS }}"
          echo "Build TYPE : ${{ needs.call-reusable.outputs.BUILD_TYPE }}"
          echo "Build BRANCH : ${{ needs.call-reusable.outputs.BUILD_BRANCH }}"
