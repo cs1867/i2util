@@ -36,4 +36,9 @@ jobs:
          echo "Build OS : ${{ needs.call-reusable.outputs.BUILD_OS }}"
          echo "Build TYPE : ${{ needs.call-reusable.outputs.BUILD_TYPE }}"
          echo "Build BRANCH : ${{ needs.call-reusable.outputs.BUILD_BRANCH }}"
+
+      - name: Delete current repo from build
+        id: verfiy-json
+        run: |
+          echo "BUILD_VARS_JSON=$BUILD_VARS_JSON" 
     
