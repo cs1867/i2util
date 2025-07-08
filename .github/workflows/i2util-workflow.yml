@@ -27,21 +27,16 @@ jobs:
          echo "Build OS : ${{ needs.call-reusable.outputs.BUILD_OS }}"
          echo "Build TYPE : ${{ needs.call-reusable.outputs.BUILD_TYPE }}"
          echo "Build BRANCH : ${{ needs.call-reusable.outputs.BUILD_BRANCH }}"
-      
-      - name: Check out Repo
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ needs.call-reusable.outputs.BUILD_BRANCH }}
-          
-      - name: Create a temporary artifact downloads folder
-        run: mkdir aritfacts
+    
+  oneshot-build:
+    needs: call-reusable
+    uses: cs1867/project/.github/workflows/oneshot-builder.yml@master
+    with:
+      BUILD_OS: ${{ needs.call-reusable.outputs.BUILD_OS }}
+      BUILD_TYPE: ${{ needs.call-reusable.outputs.BUILD_TYPE }}
+      BUILD_BRANCH: ${{ needs.call-reusable.outputs.BUILD_BRANCH }}
+      BUILD_VARS_JSON: ${{ needs.call-reusable.outputs.build_vars_json }}
 
-      - name: run docker oneshot builder
-        run: |
-          curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . '${{ needs.call-reusable.outputs.BUILD_OS }}'  
+
           
-      - uses: actions/upload-artifact@v4
-        with:
-           name: ${{ github.event.repository.name }}-${{ needs.call-reusable.outputs.BUILD_OS }}
-           path: unibuild-repo
-           retention-days: 5
+
