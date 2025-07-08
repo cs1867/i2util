@@ -38,7 +38,9 @@ jobs:
       BUILD_VARS_JSON: ${{ needs.call-reusable.outputs.build_vars_json }}
 
   post-build:
-    needs: oneshot-build
+    needs: 
+      - call-reusable
+      - oneshot-build
     uses: cs1867/project/.github/workflows/post-build.yml@master
     with:
       BUILD_OS: ${{ needs.call-reusable.outputs.BUILD_OS }}
