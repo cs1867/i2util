@@ -28,9 +28,8 @@ jobs:
          echo "Build TYPE : ${{ needs.call-reusable.outputs.BUILD_TYPE }}"
          echo "Build BRANCH : ${{ needs.call-reusable.outputs.BUILD_BRANCH }}"
 
-      - name: Delete current repo from build
-        id: verfiy-json
+      - name: Add GitHub run ID to buildids
+        id: add_run_id
         run: |
-          echo "BUILD_VARS_JSON: ${{ needs.call-reusable.outputs.BUILD_VARS_JSON }}" 
-          echo "Build OS : ${{ needs.call-reusable.outputs.BUILD_OS }}"
-    
+         echo "GITHUB_RUN_ID=${{ github.run_id }}"
+     
