@@ -37,4 +37,11 @@ jobs:
         id: review-json
         run: |
          echo "Modified JSON file: ${{ needs.call-reusable.outputs.BUILD_VARS_JSON }}"
-     
+      
+      - name: Check out Repo
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.call-reusable.outputs.BUILD_BRANCH }}
+          
+      - name: Create a temporary artifact downloads folder
+        run: mkdir aritfacts
