@@ -15,7 +15,7 @@ on:
 jobs:
 
   call-reusable:
-    uses: cs1867/project/.github/workflows/reuseable.yml@master
+    uses: cs1867/project/.github/workflows/prepare-build.yml@master
     with:
       BUILD_VARS_JSON: ${{ inputs.BUILD_VARS_JSON }}
 
@@ -27,16 +27,6 @@ jobs:
          echo "Build OS : ${{ needs.call-reusable.outputs.BUILD_OS }}"
          echo "Build TYPE : ${{ needs.call-reusable.outputs.BUILD_TYPE }}"
          echo "Build BRANCH : ${{ needs.call-reusable.outputs.BUILD_BRANCH }}"
-
-      - name: Add GitHub run ID to buildids
-        id: add_run_id
-        run: |
-         echo "GITHUB_RUN_ID=${{ github.run_id }}"
-
-      - name: echo json
-        id: review-json
-        run: |
-         echo "Modified JSON file: ${{ needs.call-reusable.outputs.BUILD_VARS_JSON }}"
       
       - name: Check out Repo
         uses: actions/checkout@v4
