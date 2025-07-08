@@ -13,16 +13,9 @@ on:
       - completed
 
 jobs:
-  set-vars:
-    runs-on: ubuntu-latest
-    outputs:
-      animal: ${{ steps.set.outputs.animal }}
-    steps:
-      - id: set
-        run: echo "animal=Dogs" >> $GITHUB_OUTPUT
+
   call-reusable:
     uses: cs1867/project/.github/workflows/reuseable.yml@master
-    needs: set-vars
     with:
       BUILD_VARS_JSON: ${{ inputs.BUILD_VARS_JSON }}
 
