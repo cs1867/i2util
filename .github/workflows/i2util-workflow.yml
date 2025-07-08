@@ -39,5 +39,5 @@ jobs:
       - name: Delete current repo from build
         id: verfiy-json
         run: |
-          echo "BUILD_VARS_JSON=$BUILD_VARS_JSON" 
+          echo "BUILD_VARS_JSON: ${{ needs.call-reusable.outputs.BUILD_VARS_JSON }}" 
     
