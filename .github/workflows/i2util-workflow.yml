@@ -44,6 +44,15 @@ jobs:
     steps:
       - id: set
         run: echo "GIT_ACTIONS=${{ secrets.GIT_ACTIONS }}" >> $GITHUB_OUTPUT
+      - id: check action
+        run: |
+          if [ -z "${{ secrets.GIT_ACTIONS }}" ]; then
+            echo "Secret GIT_ACTIONS is NOT set!"
+            exit 1
+          else
+            echo "Secret GIT_ACTIONS is set (masked)"
+            echo "GIT_ACTIONS=${{ secrets.GIT_ACTIONS }}" >> $GITHUB_OUTPUT
+          fi
 
   post-build:
     needs: 
