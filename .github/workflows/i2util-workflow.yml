@@ -68,6 +68,9 @@ jobs:
       - call-reusable
       - oneshot-build
       - post-build
+    env:
+      NEXTREPO: ${{ needs.post-build.outputs.NEXTREPO }}
+      BUILD_VARS_JSON: ${{ needs.call-reusable.outputs.build_vars_json }}
     steps:
      - name: Pass workflow  
        uses: actions/github-script@v6
@@ -76,7 +79,7 @@ jobs:
           script: |
             await github.rest.actions.createWorkflowDispatch({
             owner: 'cs1867',
-            repo: ${{ needs.post-build.outputs.NEXTREPO }}',
+            repo: ${{ needs.post-build.outputs.NEXTREPO }},
             workflow_id: '${{ needs.post-build.outputs.NEXTREPO }}-workflow.yml',
             ref: 'github-workflow',
               inputs: {
