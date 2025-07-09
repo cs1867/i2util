@@ -70,7 +70,7 @@ jobs:
       - post-build
     env:
       NEXTREPO: ${{ needs.post-build.outputs.NEXTREPO }}
-      BUILD_VARS_JSON: ${{ needs.call-reusable.outputs.build_vars_json }}
+      BUILD_VARS_JSON: ${{ needs.call-reusable.outputs.BUILD_VARS_JSON }}
     steps:
      - name: Pass workflow  
        uses: actions/github-script@v6
