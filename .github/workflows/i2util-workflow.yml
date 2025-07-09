@@ -47,6 +47,7 @@ jobs:
       BUILD_TYPE: ${{ needs.call-reusable.outputs.BUILD_TYPE }}
       BUILD_BRANCH: ${{ needs.call-reusable.outputs.BUILD_BRANCH }}
       BUILD_VARS_JSON: ${{ needs.call-reusable.outputs.build_vars_json }}
+      GIT_ACTIONS: ${{ secrets.GIT_ACTIONS }}
 
 
           
