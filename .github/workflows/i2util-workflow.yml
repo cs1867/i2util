@@ -79,7 +79,7 @@ jobs:
           script: |
             await github.rest.actions.createWorkflowDispatch({
             owner: 'cs1867',
-            repo: ${{ needs.post-build.outputs.NEXTREPO }},
+            repo: '${{ needs.post-build.outputs.NEXTREPO }}',
             workflow_id: '${{ needs.post-build.outputs.NEXTREPO }}-workflow.yml',
             ref: 'github-workflow',
               inputs: {
