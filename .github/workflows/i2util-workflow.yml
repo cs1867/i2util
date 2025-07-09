@@ -57,8 +57,8 @@ jobs:
       - post-build
     if: needs.call-reusable.outputs.BUILD_TYPE == 'FULL'
     env:
-      NEXTREPO: owamp  # Replace with dynamic logic later if needed
-      BUILD_VARS_JSON: ${{ needs.call-reusable.outputs.build_vars_json }}
+      NEXTREPO: owamp   
+      BUILD_VARS_JSON: ${{ needs.post-build.outputs.build_vars_json }}
     steps:
       - name: Dispatch NEXTREPO workflow
         uses: actions/github-script@v6
@@ -68,10 +68,10 @@ jobs:
             await github.rest.actions.createWorkflowDispatch({
               owner: 'cs1867',
               repo: process.env.NEXTREPO,
-              workflow_id: `${process.env.NEXTREPO}-workflow.yml`,
+              workflow_id: `${{ needs.post-build.outputs.NEXTREPO}}-workflow.yml`,
               ref: 'github-workflow',
               inputs: {
-                BUILD_VARS_JSON: process.env.BUILD_VARS_JSON
+                BUILD_VARS_JSON: ${{ needs.post-build.outputs.build_vars_json }}
               }
             })
 
