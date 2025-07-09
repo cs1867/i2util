@@ -43,8 +43,6 @@ jobs:
       GIT_ACTIONS: ${{ steps.set.outputs.GIT_ACTIONS }}
     steps:
       - id: set
-        run: echo "GIT_ACTIONS=${{ secrets.GIT_ACTIONS }}" >> $GITHUB_OUTPUT
-      - id: check action
         run: |
           if [ -z "${{ secrets.GIT_ACTIONS }}" ]; then
             echo "Secret GIT_ACTIONS is NOT set!"
