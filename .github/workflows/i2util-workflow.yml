@@ -48,8 +48,8 @@ jobs:
       BUILD_BRANCH: ${{ needs.call-reusable.outputs.BUILD_BRANCH }}
       BUILD_VARS_JSON: ${{ needs.call-reusable.outputs.BUILD_VARS_JSON }}
 
-  pass-workflow:
-    name: Pass workflow
+  debug-workflow:
+    name: debug workflow
     runs-on: ubuntu-latest
     needs:
       - call-reusable
@@ -61,7 +61,14 @@ jobs:
         echo "NEXTREPO: ${{ needs.post-build.outputs.NEXTREPO }}"
         echo "BUILD_VARS_JSON: ${{ needs.post-build.outputs.BUILD_VARS_JSON }}"
 
-
+  pass-workflow:
+    name: pass workflow
+    runs-on: ubuntu-latest
+    needs:
+      - call-reusable
+      - oneshot-build
+      - post-build
+    steps:
      - name: Pass workflow  
        if: env.BUILD_TYPE == 'FULL'
        uses: actions/github-script@v6
