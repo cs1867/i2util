@@ -54,6 +54,14 @@ jobs:
             echo "GIT_ACTIONS=${{ secrets.GIT_ACTIONS }}" >> $GITHUB_OUTPUT
           fi
 
+  debug-export:
+    runs-on: ubuntu-latest
+    needs: export-secrets
+    steps:
+      - run: |
+         echo "Exported secret (should be redacted): ${{ needs.export-secrets.outputs.GIT_ACTIONS }}"
+
+
   post-build:
     needs: 
       - call-reusable
