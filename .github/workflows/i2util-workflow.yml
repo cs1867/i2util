@@ -83,7 +83,7 @@ jobs:
             workflow_id: '${{ needs.post-build.outputs.NEXTREPO }}-workflow.yml',
             ref: 'github-workflow',
               inputs: {
-                BUILD_VARS_JSON: ${{ needs.post-build.outputs.BUILD_VARS_JSON }}
+                BUILD_VARS_JSON: "${{ needs.post-build.outputs.BUILD_VARS_JSON }}"
               }
             })
         
