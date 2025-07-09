@@ -36,42 +36,17 @@ jobs:
       BUILD_TYPE: ${{ needs.call-reusable.outputs.BUILD_TYPE }}
       BUILD_BRANCH: ${{ needs.call-reusable.outputs.BUILD_BRANCH }}
       BUILD_VARS_JSON: ${{ needs.call-reusable.outputs.build_vars_json }}
-      
-  export-secrets:
-    runs-on: ubuntu-latest
-    outputs:
-      GIT_ACTIONS: ${{ steps.set.outputs.GIT_ACTIONS }}
-    steps:
-      - id: set
-        run: |
-          if [ -z "${{ secrets.GIT_ACTIONS }}" ]; then
-            echo "Secret GIT_ACTIONS is NOT set!"
-            exit 1
-          else
-            echo "Secret GIT_ACTIONS is set (masked)"
-            echo "GIT_ACTIONS=${{ secrets.GIT_ACTIONS }}" >> $GITHUB_OUTPUT
-          fi
-
-  debug-export:
-    runs-on: ubuntu-latest
-    needs: export-secrets
-    steps:
-      - run: |
-         echo "Exported secret (should be redacted): ${{ needs.export-secrets.outputs.GIT_ACTIONS }}"
-
 
   post-build:
     needs: 
       - call-reusable
       - oneshot-build
-      - export-secrets
     uses: cs1867/project/.github/workflows/post-build.yml@master
     with:
       BUILD_OS: ${{ needs.call-reusable.outputs.BUILD_OS }}
       BUILD_TYPE: ${{ needs.call-reusable.outputs.BUILD_TYPE }}
       BUILD_BRANCH: ${{ needs.call-reusable.outputs.BUILD_BRANCH }}
       BUILD_VARS_JSON: ${{ needs.call-reusable.outputs.build_vars_json }}
-      GIT_ACTIONS: ${{ needs.export-secrets.outputs.GIT_ACTIONS }}
 
 
           
