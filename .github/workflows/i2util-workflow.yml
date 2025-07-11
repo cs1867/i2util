@@ -35,14 +35,3 @@ jobs:
       BUILD_TYPE: ${{ needs.prepare-build.outputs.BUILD_TYPE }}
       BUILD_BRANCH: ${{ needs.prepare-build.outputs.BUILD_BRANCH }}
       BUILD_VARS_JSON: ${{ needs.prepare-build.outputs.BUILD_VARS_JSON }}
-
- 
- 
-        
- 
-
-      
-
-
-          
-
