@@ -9,7 +9,7 @@ env:
   BUILD_BRANCH: '5.2.4' 
   BUILD_TYPE: 'FULL'
   BUILD_REPO: 'nightly' 
-  OS: 'd11'
+  OS: 'u24'
 
 jobs:
   build-single-run:
