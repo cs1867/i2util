@@ -6,10 +6,10 @@ on:
  
 env: 
   RUN_ID: ${{ github.run_id }} 
-  BUILD_BRANCH: '5.2.0' 
+  BUILD_BRANCH: '5.2.4' 
   BUILD_TYPE: 'FULL'
   BUILD_REPO: 'nightly' 
-  OS: 'd11'
+  OS: 'd12'
 
 jobs:
   build-single-run:
