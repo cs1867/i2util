@@ -29,10 +29,9 @@ jobs:
 
       - name: run docker oneshot builder
         run: |
-          ls -al 
-          sudo pwd
-          
-          
+         curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . ${{ env.OS }}  
+ 
+                   
       # curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . ${{ env.OS }}  
           
       #- uses: actions/upload-artifact@v4
