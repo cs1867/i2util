@@ -29,8 +29,7 @@ jobs:
 
       - name: run docker oneshot builder
         run: |
-         curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . ${{ env.OS }}  
- 
+         curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . 'ol8'
                    
       # curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . ${{ env.OS }}  
           
