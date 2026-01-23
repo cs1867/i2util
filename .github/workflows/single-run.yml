@@ -9,7 +9,7 @@ env:
   BUILD_BRANCH: '5.2.4' 
   BUILD_TYPE: 'FULL'
   BUILD_REPO: 'nightly' 
-  OS: 'u24'
+  OS: 'el9'
 
 jobs:
   build-single-run:
@@ -29,7 +29,11 @@ jobs:
 
       - name: run docker oneshot builder
         run: |
-          curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . ${{ env.OS }}  
+          ls -al 
+          pwd
+          
+          
+      # curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . ${{ env.OS }}  
           
       #- uses: actions/upload-artifact@v4
       #  with:
