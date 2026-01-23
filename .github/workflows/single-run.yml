@@ -30,7 +30,7 @@ jobs:
       - name: run docker oneshot builder
         run: |
           ls -al 
-          pwd
+          sudo pwd
           
           
       # curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . ${{ env.OS }}  
