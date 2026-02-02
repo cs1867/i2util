@@ -9,7 +9,7 @@ env:
   BUILD_BRANCH: '5.2.4'  
   BUILD_TYPE: 'FULL' 
   BUILD_REPO: 'nightly' 
-  OS: 'el10'
+  OS: 'el9'
 
 jobs:
   build-single-run:
