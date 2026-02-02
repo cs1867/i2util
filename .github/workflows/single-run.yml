@@ -29,16 +29,15 @@ jobs:
 
       - name: run docker oneshot builder
         run: |
-         curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . 'ol8'
+         curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . ${{ env.OS }} 
                    
-      # curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - . ${{ env.OS }}  
-          
-      #- uses: actions/upload-artifact@v4
-      #  with:
-      #     name: ${{ github.event.repository.name }}-${{ env.OS }}
-      #     path: unibuild-repo
-      #     #Don't keep these for long.  This is just a test.
-      #     retention-days: 5
+           
+      - uses: actions/upload-artifact@v4
+        with:
+           name: ${{ github.event.repository.name }}-${{ env.OS }}
+           path: unibuild-repo
+           #Don't keep these for long.  This is just a test.
+           retention-days: 2
 
  
     
